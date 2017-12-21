@@ -1,0 +1,32 @@
+interface Node {
+  id: ID
+}
+
+type Message  implements Node{
+  id: ID
+  message_text: String
+  sent_time: String
+}
+
+input NewMessage {
+	id: ID!
+	message_text: String!
+	sent_time: String!
+}
+
+type Mutation {
+  addMessage(input: NewMessage!): Message
+}
+
+type Query {
+  # Fetches a message given its ID
+  node(
+    id: ID!
+  ): Node
+  message: Message
+}
+
+type Query {
+  # Returns all messages
+  messages: [Message]
+}
