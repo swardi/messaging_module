@@ -59,7 +59,9 @@ class NoteInput extends Component {
 
   handleKeypress (event){
       if (event.key === 'Enter'){
-        this.commitCreateNote( this.state.noteText, "SH", "23234" )      
+        var date = new Date();
+        var timeStamp = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear() + ' ' + date.getHours() + ":" + date.getMinutes();
+        this.commitCreateNote( this.state.noteText, "SH", timeStamp )      
       }
       
   }
