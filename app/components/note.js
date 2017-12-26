@@ -7,12 +7,12 @@ class Note extends React.Component {
   
   constructor(props) {
     super(props);
-    this.state = {showEditable: false};
+    this.state = {isEditable: false};
   }
 
 
   editNote(){
-     this.setState({ showEditable: true });
+     this.setState({ isEditable: true });
   }
 
   render() {
@@ -22,7 +22,7 @@ class Note extends React.Component {
                 SM
               </Col>
              <Col md={7} >
-                {this.state.showEditable ? <input type='text'  /> : this.props.note.noteText }
+                {this.state.isEditable ? <input type='text'  /> : this.props.note.noteText }
              
               </Col>
             <NoteControls note={this.props.note} editNote={this.editNote}/>

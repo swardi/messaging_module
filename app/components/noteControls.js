@@ -12,6 +12,15 @@ class NoteControls extends React.Component {
         mutation:deleteNoteMutation,
         variables: {
           id: this.props.note.id,
+        },
+        optimisticUpdater : store => {
+            var notes=store.getRoot().getLinkedRecords("getNotes");
+
+            ConnectionHandler.deleteNode(notes, this.props.note.id);
+
+        },
+        updater: (store, data) =>{
+
         }
       }
     );
