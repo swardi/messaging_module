@@ -1,32 +1,24 @@
-interface Node {
-  id: ID
-}
+  input NoteInput {
+      noteText: String
+      timeStamp:   String
+      author : String
+  }
 
-type Message  implements Node{
-  id: ID
-  message_text: String
-  sent_time: String
-}
+  type Note {
+      id: ID!
+      noteText: String!
+      author: String!
+      timeStamp : String!
+   }
 
-input NewMessage {
-	id: ID!
-	message_text: String!
-	sent_time: String!
-}
+  type Query {
+      getNote(id: ID!): Note
+      getNotes : [Note]
+      author : String!
+  }
 
-type Mutation {
-  addMessage(input: NewMessage!): Message
-}
-
-type Query {
-  # Fetches a message given its ID
-  node(
-    id: ID!
-  ): Node
-  message: Message
-}
-
-type Query {
-  # Returns all messages
-  messages: [Message]
-}
+  type Mutation {
+      createNote(input: NoteInput): Note
+      updateNote(id: ID!, input: NoteInput): Note
+      deleteNote (id:ID!): Note
+  }
