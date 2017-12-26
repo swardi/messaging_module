@@ -45,14 +45,22 @@ var notesDb = [];
 // The root provides a resolver function for each API endpoint
 var root = {
   
+  findElementPositionById : function(id){
+    for(var i=0; i<=notesDb.length; i++){
+      if(notesDb[i].id === id)
+        return i;
+    }
+    return -1;
+  },
+
   getNotes: function () {
     return notesDb;
   },
 
   getNote: function ({id}) {
-    // if (!notesDb[id]) {
-    //   throw new Error('no note exists with id ' + id);
-    // }
+    if (findElementPositionById(id) === -1) {
+      throw new Error('no note exists with id ' + id);
+    }
     return new Note(id, notesDb[id].noteText, notesDb[id].author, notesDb.timeStamp);
   },
 
@@ -68,20 +76,23 @@ var root = {
     return note;
   },
   updateNote: function ({id, input}) {
-    // if (!notesDb[id]) {
-    //   throw new Error('no note exists with id ' + id);
-    // }
-    // This replaces all old data, but some apps might want partial update.
-    notesDb[id] = input;
-    return new Note(id, notesDb[id].noteText, notesDb[id].author, notesDb.timeStamp);
+    var position=findElementPositionById(id);
+    if (position === -1) {
+      throw new Error('no note exists with id ' + id);
+    }
+    var newNote = new Note(id, input.noteText, input.author, input.timeStamp)
+    notesDb[position] = newNote;
+    return newNote;
   },
 
   deleteNote : function({id}){
-  	// if (!notesDb[id]) {
-   //    throw new Error('no note exists with id ' + id);
-   //  }
-   var note = new Note(notesDb[id].id, notesDb[id].noteText, notesDb[id].author, notesDb[id].timeStamp)
-    delete notesDb[id];
+  	var noteIndex = this.findElementPositionById(id)
+    if (noteIndex === -1) {
+      throw new Error('no note exists with id ' + id);
+    }
+    
+    var note = new Note(notesDb[noteIndex].id, notesDb[noteIndex].noteText, notesDb[noteIndex].author, notesDb[noteIndex].timeStamp)
+    delete notesDb[noteIndex];
     return note;
   }
 

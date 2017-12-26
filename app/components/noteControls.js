@@ -1,43 +1,45 @@
 import React, { Component } from "react";
 import {Row, Col} from "react-bootstrap";
-import myEnvironment from  "../environment"
+import { createFragmentContainer,  graphql,  commitMutation } from 'react-relay'
 import deleteNoteMutation from "../mutations/deleteNote";
 
-import {graphql, commitMutation} from 'react-relay';
-
-function commitDelete(id) {
-  return commitMutation(
-    myEnvironment,
-    {
-      deleteNoteMutation,
-      variables: {
-        id: id,
+class NoteControls extends React.Component {
+  
+  commitDelete() {
+    return commitMutation(
+      this.props.relay.environment,
+      {
+        mutation:deleteNoteMutation,
+        variables: {
+          id: this.props.note.id,
+        }
       }
-    }
-  );
-}
-
-
-export default class NoteControls extends Component {
-
-  constructor(props) {
-    super(props);
+    );
   }
 
   deleteNote(){
-    commitDelete(this.props.note.id)      
+    this.commitDelete()      
   }
 
-  editNote(){
-    console.log("edit note");
-  }
   render() {
-    
     return (
-          <Col md={4}  >
-           <button className="fa fa-edit button-bar" onClick={this.editNote.bind(this)}>  </button>
-           <button  className="fa fa-remove button-bar" onClick={this.deleteNote.bind(this)}>  </button>
+           <Col md={4}  >
+              <button 
+                className="fa fa-edit button-bar" 
+                onClick={this.props.editNote.bind(this)}>  
+              </button>
+              
+              <button  className="fa fa-remove button-bar" onClick={this.deleteNote.bind(this)}>  </button>
           </Col>     
-    );
+      );
   }
 }
+
+export default createFragmentContainer(NoteControls, {
+  note: graphql`
+    fragment noteControls_note on Note {
+      id
+      noteText
+      }
+  `,
+});

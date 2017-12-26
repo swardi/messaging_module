@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 17e03ca3a3f4c36c70fdfe4343ce83b9
+ * @relayHash abdc20931117a315f7dfdbfc48c31326
  */
 
 /* eslint-disable */
@@ -15,7 +15,6 @@ export type deleteNoteMutationVariables = {|
 export type deleteNoteMutationResponse = {|
   +deleteNote: ?{|
     +id: string;
-    +noteText: string;
   |};
 |};
 */
@@ -27,7 +26,6 @@ mutation deleteNoteMutation(
 ) {
   deleteNote(id: $id) {
     id
-    noteText
   }
 }
 */
@@ -66,13 +64,6 @@ const batch /*: ConcreteBatch*/ = {
             "alias": null,
             "args": null,
             "name": "id",
-            "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "noteText",
             "storageKey": null
           }
         ],
@@ -119,20 +110,13 @@ const batch /*: ConcreteBatch*/ = {
             "args": null,
             "name": "id",
             "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "noteText",
-            "storageKey": null
           }
         ],
         "storageKey": null
       }
     ]
   },
-  "text": "mutation deleteNoteMutation(\n  $id: ID!\n) {\n  deleteNote(id: $id) {\n    id\n    noteText\n  }\n}\n"
+  "text": "mutation deleteNoteMutation(\n  $id: ID!\n) {\n  deleteNote(id: $id) {\n    id\n  }\n}\n"
 };
 
 module.exports = batch;

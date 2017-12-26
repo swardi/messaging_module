@@ -1,33 +1,36 @@
 import React, { Component } from "react";
 import { Button, FormGroup, FormControl, ControlLabel, InputGroup } from "react-bootstrap";
-import myEnvironment from  "../environment"
-import {graphql, commitMutation} from 'react-relay';
+import {graphql, commitMutation, createFragmentContainer} from 'react-relay';
 import createNoteMutation from "../mutations/createNote";
 
-function commitCreateNote(noteText, author, timeStamp) {
-  return commitMutation(
-    myEnvironment,
-    {
-      mutation: createNoteMutation,
-      variables: {
-        input: {noteText: noteText, author: author, timeStamp: timeStamp},
-      },
-      onCompleted: (response, errors)=>{
-        
-      },
-      updater : (store, data) => {
-        
-      }
-    }
-  );
-}
-
-export default class NoteInput extends Component {
+class NoteInput extends Component {
 
   constructor(props) {
     super(props);
     this.state = {noteText: ''};
   }
+
+  commitCreateNote(noteText, author, timeStamp) {
+    var self=this;
+    return commitMutation(
+      self.props.relay.environment,
+      {
+        mutation: createNoteMutation,
+        variables: {
+          input: {noteText: noteText, author: author, timeStamp: timeStamp},
+        },
+        onCompleted: (response, errors)=>{
+          self.setState({noteText: ''})
+        },
+        updater: (store) => {
+          const payload = store.getRootField('createNote');
+          const record = store.create(payload.getValue('id'), 'Note');
+          console.log(payload);
+        },
+        
+      }
+    );
+}
 
   handleChange(event) {
     this.setState({noteText: event.target.value})
@@ -35,8 +38,7 @@ export default class NoteInput extends Component {
 
   handleKeypress (event){
       if (event.key === 'Enter'){
-        commitCreateNote( this.state.noteText, "SH", "23234" )      
-       // this.setState({noteText:''});
+        this.commitCreateNote( this.state.noteText, "SH", "23234" )      
       }
       
   }
@@ -45,8 +47,9 @@ export default class NoteInput extends Component {
     
     return (
           <span> 
-              <FormGroup controlId="email" bsSize="large">
+              <FormGroup bsSize="large">
                 <FormControl 
+                  id="notesInputTextArea"
                   componentClass="textarea" 
                   placeholder="Enter your note" 
                   autoFocus 
@@ -60,3 +63,11 @@ export default class NoteInput extends Component {
   }
 }
  
+
+ export default createFragmentContainer(NoteInput, {
+  author: graphql`
+    fragment noteInput_author on Note {
+      author
+      }
+  `,
+});

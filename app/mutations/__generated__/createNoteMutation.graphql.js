@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash bf5d0bda3f514f0dda8cd0f94a68fae6
+ * @relayHash fbc7a60dad7b996eb254c1d3df72456d
  */
 
 /* eslint-disable */
@@ -19,6 +19,9 @@ export type createNoteMutationVariables = {|
 export type createNoteMutationResponse = {|
   +createNote: ?{|
     +id: string;
+    +noteText: string;
+    +timeStamp: string;
+    +author: string;
   |};
 |};
 */
@@ -30,6 +33,9 @@ mutation createNoteMutation(
 ) {
   createNote(input: $input) {
     id
+    noteText
+    timeStamp
+    author
   }
 }
 */
@@ -68,6 +74,27 @@ const batch /*: ConcreteBatch*/ = {
             "alias": null,
             "args": null,
             "name": "id",
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "args": null,
+            "name": "noteText",
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "args": null,
+            "name": "timeStamp",
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "args": null,
+            "name": "author",
             "storageKey": null
           }
         ],
@@ -114,13 +141,34 @@ const batch /*: ConcreteBatch*/ = {
             "args": null,
             "name": "id",
             "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "args": null,
+            "name": "noteText",
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "args": null,
+            "name": "timeStamp",
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "args": null,
+            "name": "author",
+            "storageKey": null
           }
         ],
         "storageKey": null
       }
     ]
   },
-  "text": "mutation createNoteMutation(\n  $input: NoteInput!\n) {\n  createNote(input: $input) {\n    id\n  }\n}\n"
+  "text": "mutation createNoteMutation(\n  $input: NoteInput!\n) {\n  createNote(input: $input) {\n    id\n    noteText\n    timeStamp\n    author\n  }\n}\n"
 };
 
 module.exports = batch;

@@ -6,3 +6,5 @@
 # dependencies
 /node_modules
 /server/node_modules
+app/components/__generated__/*.*
+app/mutations/__generated__/*.*
