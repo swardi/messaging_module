@@ -1,4 +1,4 @@
-# Sample Authentication application for i2x.
+# Sample Relay, GraphQL application
 
 ## Running the application locally
 
