@@ -1,6 +1,6 @@
 const editNoteMutation = graphql`
-    mutation editNoteMutation($id: ID!, $input: NoteInput!) {
-      updateNote(id: $id, input:$input){
+    mutation editNoteMutation($id: ID!, $noteText: String!) {
+      updateNote(id: $id, noteText:$noteText){
         id
       }
 }`;

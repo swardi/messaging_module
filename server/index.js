@@ -2,7 +2,6 @@ var express = require('express');
 var graphqlHTTP = require('express-graphql');
 var { buildSchema } = require('graphql');
 
-// Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
 	input NoteInput {
 	    noteText: String
@@ -25,7 +24,7 @@ var schema = buildSchema(`
 
 	type Mutation {
 	    createNote(input: NoteInput): Note
-	    updateNote(id: ID!, input: NoteInput): Note
+	    updateNote(id: ID!, noteText: String!): Note
 	    deleteNote (id:ID!): Note
 	}
   
@@ -58,7 +57,7 @@ var root = {
   },
 
   getNote: function ({id}) {
-    if (findElementPositionById(id) === -1) {
+    if (this.findElementPositionById(id) === -1) {
       throw new Error('no note exists with id ' + id);
     }
     return new Note(id, notesDb[id].noteText, notesDb[id].author, notesDb.timeStamp);
@@ -75,14 +74,13 @@ var root = {
     notesDb.push(note);
     return note;
   },
-  updateNote: function ({id, input}) {
-    var position=findElementPositionById(id);
+  updateNote: function ({id, noteText}) {
+    var position=this.findElementPositionById(id);
     if (position === -1) {
       throw new Error('no note exists with id ' + id);
     }
-    var newNote = new Note(id, input.noteText, input.author, input.timeStamp)
-    notesDb[position] = newNote;
-    return newNote;
+    notesDb[position].noteText = noteText;
+    return notesDb[position];
   },
 
   deleteNote : function({id}){

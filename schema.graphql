@@ -19,6 +19,6 @@
 
   type Mutation {
       createNote(input: NoteInput): Note
-      updateNote(id: ID!, input: NoteInput): Note
+      updateNote(id: ID!, noteText: String!): Note
       deleteNote (id:ID!): Note
   }

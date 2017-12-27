@@ -31,7 +31,7 @@ class NoteControls extends React.Component {
            <Col md={4}  >
               <button 
                 className="fa fa-edit button-bar" 
-                onClick={this.props.editNote.bind(this)}>  
+                onClick={this.props.editNote}>  
               </button>
               
               <button  className="fa fa-remove button-bar" onClick={this.deleteNote.bind(this)}>  </button>

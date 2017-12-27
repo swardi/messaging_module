@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 2baefbaaa2f53204695675454a10d78c
+ * @relayHash 4bdf0ef537db31388dbf259dfb16dee5
  */
 
 /* eslint-disable */
@@ -11,11 +11,7 @@
 import type {ConcreteBatch} from 'relay-runtime';
 export type editNoteMutationVariables = {|
   id: string;
-  input: {
-    noteText?: ?string;
-    timeStamp?: ?string;
-    author?: ?string;
-  };
+  noteText: string;
 |};
 export type editNoteMutationResponse = {|
   +updateNote: ?{|
@@ -28,9 +24,9 @@ export type editNoteMutationResponse = {|
 /*
 mutation editNoteMutation(
   $id: ID!
-  $input: NoteInput!
+  $noteText: String!
 ) {
-  updateNote(id: $id, input: $input) {
+  updateNote(id: $id, noteText: $noteText) {
     id
   }
 }
@@ -47,8 +43,8 @@ const batch /*: ConcreteBatch*/ = {
       },
       {
         "kind": "LocalArgument",
-        "name": "input",
-        "type": "NoteInput!",
+        "name": "noteText",
+        "type": "String!",
         "defaultValue": null
       }
     ],
@@ -68,9 +64,9 @@ const batch /*: ConcreteBatch*/ = {
           },
           {
             "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "NoteInput"
+            "name": "noteText",
+            "variableName": "noteText",
+            "type": "String!"
           }
         ],
         "concreteType": "Note",
@@ -104,8 +100,8 @@ const batch /*: ConcreteBatch*/ = {
       },
       {
         "kind": "LocalArgument",
-        "name": "input",
-        "type": "NoteInput!",
+        "name": "noteText",
+        "type": "String!",
         "defaultValue": null
       }
     ],
@@ -125,9 +121,9 @@ const batch /*: ConcreteBatch*/ = {
           },
           {
             "kind": "Variable",
-            "name": "input",
-            "variableName": "input",
-            "type": "NoteInput"
+            "name": "noteText",
+            "variableName": "noteText",
+            "type": "String!"
           }
         ],
         "concreteType": "Note",
@@ -146,7 +142,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "mutation editNoteMutation(\n  $id: ID!\n  $input: NoteInput!\n) {\n  updateNote(id: $id, input: $input) {\n    id\n  }\n}\n"
+  "text": "mutation editNoteMutation(\n  $id: ID!\n  $noteText: String!\n) {\n  updateNote(id: $id, noteText: $noteText) {\n    id\n  }\n}\n"
 };
 
 module.exports = batch;
