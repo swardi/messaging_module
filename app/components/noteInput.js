@@ -5,12 +5,12 @@ import {ConnectionHandler} from 'relay-runtime';
 import createNoteMutation from "../mutations/createNote";
 
 
-class NoteInput extends Component {
+class NoteInput extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {noteText: ''};
-    this.tempID=0;
+  
   }
 
   commitCreateNote(noteText, author, timeStamp) {
@@ -27,26 +27,14 @@ class NoteInput extends Component {
         },
         
         updater: (store, data) => {
-          var storeRecord = store.get(data.createNote)
-           const notesProxy = store.getRoot();
-           //var linkedRecrods = store.getRoot().getLinkedRecords("getNotes")
-           // const conn = ConnectionHandler.getConnection(
-           //    notesProxy,
-           //    'Note',
-           //  );
-            //ConnectionHandler.insertEdgeAfter(conn, storeRecord);
-
-
-            var notes=store.getRoot().getLinkedRecords("getNotes");
-            var last = notes[notes.length-1];
-            ConnectionHandler.insertEdgeAfter(last, storeRecord);
-
-          
-          // const node = store.create(id, 'Note');
-          // node.setValue(noteText, 'noteText');
-          // node.setValue(author, 'author');
-          // node.setValue(timeStamp, 'timeStamp');
-          // ConnectionHandler.insertEdgeAfter(notes, node);
+            // var storeRecord = store.getRootField("createNote")
+            // var notes=store.getRoot().getLinkedRecords("getNotes");
+            // var last = notes[notes.length-1];
+            // const conn = ConnectionHandler.getConnection(
+            //   last,
+            //   'getNotes',
+            // );
+            // ConnectionHandler.insertEdgeAfter(last, storeRecord);
         },
 
       }
@@ -88,9 +76,9 @@ class NoteInput extends Component {
  
 
  export default createFragmentContainer(NoteInput, {
-  author: graphql`
-    fragment noteInput_author on Note {
-      author
+  noteId: graphql`
+    fragment noteInput_noteId on Note {
+      id
       }
   `,
 });

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {Row, Col} from "react-bootstrap";
 import { createFragmentContainer,  graphql,  commitMutation } from 'react-relay'
 import deleteNoteMutation from "../mutations/deleteNote";
+import {ConnectionHandler} from 'relay-runtime';
 
 class NoteControls extends React.Component {
   

@@ -17,7 +17,7 @@ export default class Notes extends React.Component {
                 getNotes{
                   id
                   ...note_note
-                  ...noteInput_author
+                  ...noteInput_noteId
                 }}`}
 
         variables={{}}

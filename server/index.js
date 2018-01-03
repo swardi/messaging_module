@@ -90,7 +90,7 @@ var root = {
     }
     
     var note = new Note(notesDb[noteIndex].id, notesDb[noteIndex].noteText, notesDb[noteIndex].author, notesDb[noteIndex].timeStamp)
-    delete notesDb[noteIndex];
+    notesDb.splice(noteIndex,1);
     return note;
   }
 
