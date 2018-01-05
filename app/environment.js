@@ -1,13 +1,16 @@
-import {
+const {
   Environment,
   Network,
   RecordSource,
   Store,
-} from 'relay-runtime'
+} = require('relay-runtime')
 
-const myEnvironment = new Environment({
-  network: Network.create((operation, variables) => {
-  return fetch('http://localhost:8080/graphql', {
+
+function fetchQuery(
+  operation,
+  variables,
+) {
+  return fetch('https://api.graph.cool/relay/v1/cjc0bags53ds801924ixx1sqe', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -20,9 +23,14 @@ const myEnvironment = new Environment({
   }).then(response => {
     return response.json()
   })
-}),
-  store: new Store(new RecordSource()),
-});
+}
 
+const network = Network.create(fetchQuery)
 
-export default myEnvironment;
+const source = new RecordSource()
+const store = new Store(source)
+
+export default new Environment({
+  network,
+  store,
+})

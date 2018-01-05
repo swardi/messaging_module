@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 4bdf0ef537db31388dbf259dfb16dee5
+ * @relayHash 3e4c54189a76892421a812befc367ead
  */
 
 /* eslint-disable */
@@ -10,12 +10,22 @@
 /*::
 import type {ConcreteBatch} from 'relay-runtime';
 export type editNoteMutationVariables = {|
-  id: string;
-  noteText: string;
+  input: {
+    author?: ?string;
+    id: string;
+    noteText?: ?string;
+    timeStamp?: ?string;
+    clientMutationId: string;
+  };
 |};
 export type editNoteMutationResponse = {|
   +updateNote: ?{|
-    +id: string;
+    +note: ?{|
+      +id: string;
+      +noteText: string;
+      +timeStamp: string;
+      +author: string;
+    |};
   |};
 |};
 */
@@ -23,11 +33,15 @@ export type editNoteMutationResponse = {|
 
 /*
 mutation editNoteMutation(
-  $id: ID!
-  $noteText: String!
+  $input: UpdateNoteInput!
 ) {
-  updateNote(id: $id, noteText: $noteText) {
-    id
+  updateNote(input: $input) {
+    note {
+      id
+      noteText
+      timeStamp
+      author
+    }
   }
 }
 */
@@ -37,14 +51,8 @@ const batch /*: ConcreteBatch*/ = {
     "argumentDefinitions": [
       {
         "kind": "LocalArgument",
-        "name": "id",
-        "type": "ID!",
-        "defaultValue": null
-      },
-      {
-        "kind": "LocalArgument",
-        "name": "noteText",
-        "type": "String!",
+        "name": "input",
+        "type": "UpdateNoteInput!",
         "defaultValue": null
       }
     ],
@@ -58,26 +66,52 @@ const batch /*: ConcreteBatch*/ = {
         "args": [
           {
             "kind": "Variable",
-            "name": "id",
-            "variableName": "id",
-            "type": "ID!"
-          },
-          {
-            "kind": "Variable",
-            "name": "noteText",
-            "variableName": "noteText",
-            "type": "String!"
+            "name": "input",
+            "variableName": "input",
+            "type": "UpdateNoteInput!"
           }
         ],
-        "concreteType": "Note",
+        "concreteType": "UpdateNotePayload",
         "name": "updateNote",
         "plural": false,
         "selections": [
           {
-            "kind": "ScalarField",
+            "kind": "LinkedField",
             "alias": null,
             "args": null,
-            "name": "id",
+            "concreteType": "Note",
+            "name": "note",
+            "plural": false,
+            "selections": [
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "id",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "noteText",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "timeStamp",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "author",
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           }
         ],
@@ -94,14 +128,8 @@ const batch /*: ConcreteBatch*/ = {
     "argumentDefinitions": [
       {
         "kind": "LocalArgument",
-        "name": "id",
-        "type": "ID!",
-        "defaultValue": null
-      },
-      {
-        "kind": "LocalArgument",
-        "name": "noteText",
-        "type": "String!",
+        "name": "input",
+        "type": "UpdateNoteInput!",
         "defaultValue": null
       }
     ],
@@ -115,26 +143,52 @@ const batch /*: ConcreteBatch*/ = {
         "args": [
           {
             "kind": "Variable",
-            "name": "id",
-            "variableName": "id",
-            "type": "ID!"
-          },
-          {
-            "kind": "Variable",
-            "name": "noteText",
-            "variableName": "noteText",
-            "type": "String!"
+            "name": "input",
+            "variableName": "input",
+            "type": "UpdateNoteInput!"
           }
         ],
-        "concreteType": "Note",
+        "concreteType": "UpdateNotePayload",
         "name": "updateNote",
         "plural": false,
         "selections": [
           {
-            "kind": "ScalarField",
+            "kind": "LinkedField",
             "alias": null,
             "args": null,
-            "name": "id",
+            "concreteType": "Note",
+            "name": "note",
+            "plural": false,
+            "selections": [
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "id",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "noteText",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "timeStamp",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "author",
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           }
         ],
@@ -142,7 +196,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "mutation editNoteMutation(\n  $id: ID!\n  $noteText: String!\n) {\n  updateNote(id: $id, noteText: $noteText) {\n    id\n  }\n}\n"
+  "text": "mutation editNoteMutation(\n  $input: UpdateNoteInput!\n) {\n  updateNote(input: $input) {\n    note {\n      id\n      noteText\n      timeStamp\n      author\n    }\n  }\n}\n"
 };
 
 module.exports = batch;

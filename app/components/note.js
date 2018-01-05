@@ -2,23 +2,9 @@ import React, { Component } from "react";
 import {Row, Col} from "react-bootstrap";
 import NoteControls from "./noteControls";
 import { createFragmentContainer,  graphql, commitMutation } from 'react-relay'
-import editNoteMutation from "../mutations/editNote";
+import EditNoteMutation from "../mutations/editNote";
 
 class Note extends Component {
-  
-  commitEdit() {
-    return commitMutation(
-      this.props.relay.environment,
-      {
-        mutation:editNoteMutation,
-        variables: {
-          id: this.props.note.id,
-          noteText: this.state.noteTextInEditMode
-        }
-      }
-    );
-  }
-
   constructor(props) {
     super(props);
     this.state = {isEditable: false, noteTextInEditMode: this.props.note.noteText};
@@ -34,19 +20,16 @@ class Note extends Component {
 
   handleKeypress (event){
       if (event.key === 'Enter'){
-        this.commitEdit();
+        EditNoteMutation(this.props.note, this.state.noteTextInEditMode, "viewer-fixed")
         this.setState({ isEditable: false });
-      }
-      
+      }    
   }
 
-
   render() {
-    console.log("render called again");
     return (
            <Row md={12} className="underlined-row">
              <Col md={1} >
-                SM
+                {this.props.note.author}
               </Col>
              <Col md={7} > 
                 {this.state.isEditable ? <input type='text' value={this.state.noteTextInEditMode} autoFocus onChange={this.handleChange.bind(this)} onKeyPress={this.handleKeypress.bind(this)}/> : this.props.note.noteText }
@@ -60,14 +43,14 @@ class Note extends Component {
   }
 }
 
-export default createFragmentContainer(Note, {
-  note: graphql`
-    fragment note_note on Note {
-      id
-      noteText
-      timeStamp
-      author
-      ...noteControls_note
-      }
-  `,
-});
+export default createFragmentContainer(Note, graphql`
+  fragment note_viewer on Viewer {
+    id
+  }
+  fragment note_note on Note {
+    id
+    noteText
+    author
+    timeStamp
+  }
+`)

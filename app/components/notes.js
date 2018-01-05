@@ -1,53 +1,47 @@
 import React, { Component } from "react";
 import {ListGroup, ListGroupItem, Grid} from "react-bootstrap"
-import { createFragmentContainer,  QueryRenderer, graphql } from 'react-relay'
+import { createFragmentContainer,   graphql } from 'react-relay'
 
 import Note from "./note";
 import NoteCount from "./noteCount";
 import NoteInput from "./noteInput";
-import myEnvironment from  "../environment"
 
-export default class Notes extends React.Component {
+
+class Notes extends React.Component {
 
   render() {
     return (
-      <QueryRenderer
-        environment={myEnvironment}
-        query={graphql`query notesQuery{
-                getNotes{
-                  id
-                  ...note_note
-                  ...noteInput_noteId
-                }}`}
-
-        variables={{}}
-
-        render={({error, props}) => {
-          if (error) {
-            return <div>Error in loading notes!</div>;
-          }
-          if (!props) {
-            return <div>Loading...</div>;
-          }
-          return (
-            <div>
-            <NoteCount count={props.getNotes.length}/>
-            <div className="notes-list slimscrollbar">
-              <ListGroup >
-                {
-                  props.getNotes.map(note=> (
-                    <Note note={note} key={note.id}/>   
-                  ) )
-                }
-                 
-             </ListGroup>            
-            
-          </div>
-          <NoteInput />
-          </div>
-          );
-        }}
-      />
-      );
+        <div>
+          <NoteCount count={this.props.viewer.allNotes.edges.length}/>
+          <div className="notes-list slimscrollbar">
+            <ListGroup >
+              {
+                this.props.viewer.allNotes.edges.map(({node}, index)=> (
+                  <Note note={node} key={node.id} viewer={this.props.viewer}/>   
+                ) )
+              }
+               
+           </ListGroup>            
+        </div>
+        <NoteInput viewer={this.props.viewer}/>
+      </div>
+    );
   }
 }
+
+export default createFragmentContainer(Notes, graphql`
+  fragment notes_viewer on Viewer {
+    ...note_viewer
+    allNotes(last: 100) @connection(key: "notes_allNotes", filters: []) {
+      edges {
+        node {
+          id
+          noteText
+          author
+          timeStamp
+          ...note_note
+        }
+      }
+    }
+  }
+`)

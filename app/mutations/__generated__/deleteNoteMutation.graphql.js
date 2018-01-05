@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash abdc20931117a315f7dfdbfc48c31326
+ * @relayHash d21ddefd44c2803b8797407d77947413
  */
 
 /* eslint-disable */
@@ -10,11 +10,14 @@
 /*::
 import type {ConcreteBatch} from 'relay-runtime';
 export type deleteNoteMutationVariables = {|
-  id: string;
+  input: {
+    id: string;
+    clientMutationId: string;
+  };
 |};
 export type deleteNoteMutationResponse = {|
   +deleteNote: ?{|
-    +id: string;
+    +deletedId: ?string;
   |};
 |};
 */
@@ -22,10 +25,10 @@ export type deleteNoteMutationResponse = {|
 
 /*
 mutation deleteNoteMutation(
-  $id: ID!
+  $input: DeleteNoteInput!
 ) {
-  deleteNote(id: $id) {
-    id
+  deleteNote(input: $input) {
+    deletedId
   }
 }
 */
@@ -35,8 +38,8 @@ const batch /*: ConcreteBatch*/ = {
     "argumentDefinitions": [
       {
         "kind": "LocalArgument",
-        "name": "id",
-        "type": "ID!",
+        "name": "input",
+        "type": "DeleteNoteInput!",
         "defaultValue": null
       }
     ],
@@ -50,12 +53,12 @@ const batch /*: ConcreteBatch*/ = {
         "args": [
           {
             "kind": "Variable",
-            "name": "id",
-            "variableName": "id",
-            "type": "ID!"
+            "name": "input",
+            "variableName": "input",
+            "type": "DeleteNoteInput!"
           }
         ],
-        "concreteType": "Note",
+        "concreteType": "DeleteNotePayload",
         "name": "deleteNote",
         "plural": false,
         "selections": [
@@ -63,7 +66,7 @@ const batch /*: ConcreteBatch*/ = {
             "kind": "ScalarField",
             "alias": null,
             "args": null,
-            "name": "id",
+            "name": "deletedId",
             "storageKey": null
           }
         ],
@@ -80,8 +83,8 @@ const batch /*: ConcreteBatch*/ = {
     "argumentDefinitions": [
       {
         "kind": "LocalArgument",
-        "name": "id",
-        "type": "ID!",
+        "name": "input",
+        "type": "DeleteNoteInput!",
         "defaultValue": null
       }
     ],
@@ -95,12 +98,12 @@ const batch /*: ConcreteBatch*/ = {
         "args": [
           {
             "kind": "Variable",
-            "name": "id",
-            "variableName": "id",
-            "type": "ID!"
+            "name": "input",
+            "variableName": "input",
+            "type": "DeleteNoteInput!"
           }
         ],
-        "concreteType": "Note",
+        "concreteType": "DeleteNotePayload",
         "name": "deleteNote",
         "plural": false,
         "selections": [
@@ -108,7 +111,7 @@ const batch /*: ConcreteBatch*/ = {
             "kind": "ScalarField",
             "alias": null,
             "args": null,
-            "name": "id",
+            "name": "deletedId",
             "storageKey": null
           }
         ],
@@ -116,7 +119,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "mutation deleteNoteMutation(\n  $id: ID!\n) {\n  deleteNote(id: $id) {\n    id\n  }\n}\n"
+  "text": "mutation deleteNoteMutation(\n  $input: DeleteNoteInput!\n) {\n  deleteNote(input: $input) {\n    deletedId\n  }\n}\n"
 };
 
 module.exports = batch;

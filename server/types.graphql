@@ -1,0 +1,6 @@
+ type Note @model {
+      id: ID! @isUnique
+      noteText: String!
+      author: String!
+      timeStamp : String!
+   }

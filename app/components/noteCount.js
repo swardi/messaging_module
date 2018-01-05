@@ -12,7 +12,7 @@ export default class NoteCount extends Component {
     return ( 
            <Row >
              <Col   md={12} >
-                {this.props.count} items
+                {this.props.count} Items
               </Col> 
            </Row>     
     );

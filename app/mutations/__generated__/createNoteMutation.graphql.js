@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash fbc7a60dad7b996eb254c1d3df72456d
+ * @relayHash bf44e1f3e8d9013efc6ac1af8da10765
  */
 
 /* eslint-disable */
@@ -11,17 +11,20 @@
 import type {ConcreteBatch} from 'relay-runtime';
 export type createNoteMutationVariables = {|
   input: {
-    noteText?: ?string;
-    timeStamp?: ?string;
-    author?: ?string;
+    author: string;
+    noteText: string;
+    timeStamp: string;
+    clientMutationId: string;
   };
 |};
 export type createNoteMutationResponse = {|
   +createNote: ?{|
-    +id: string;
-    +noteText: string;
-    +timeStamp: string;
-    +author: string;
+    +note: ?{|
+      +id: string;
+      +noteText: string;
+      +timeStamp: string;
+      +author: string;
+    |};
   |};
 |};
 */
@@ -29,13 +32,15 @@ export type createNoteMutationResponse = {|
 
 /*
 mutation createNoteMutation(
-  $input: NoteInput!
+  $input: CreateNoteInput!
 ) {
   createNote(input: $input) {
-    id
-    noteText
-    timeStamp
-    author
+    note {
+      id
+      noteText
+      timeStamp
+      author
+    }
   }
 }
 */
@@ -46,7 +51,7 @@ const batch /*: ConcreteBatch*/ = {
       {
         "kind": "LocalArgument",
         "name": "input",
-        "type": "NoteInput!",
+        "type": "CreateNoteInput!",
         "defaultValue": null
       }
     ],
@@ -62,39 +67,50 @@ const batch /*: ConcreteBatch*/ = {
             "kind": "Variable",
             "name": "input",
             "variableName": "input",
-            "type": "NoteInput"
+            "type": "CreateNoteInput!"
           }
         ],
-        "concreteType": "Note",
+        "concreteType": "CreateNotePayload",
         "name": "createNote",
         "plural": false,
         "selections": [
           {
-            "kind": "ScalarField",
+            "kind": "LinkedField",
             "alias": null,
             "args": null,
-            "name": "id",
-            "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "noteText",
-            "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "timeStamp",
-            "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "author",
+            "concreteType": "Note",
+            "name": "note",
+            "plural": false,
+            "selections": [
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "id",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "noteText",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "timeStamp",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "author",
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           }
         ],
@@ -112,7 +128,7 @@ const batch /*: ConcreteBatch*/ = {
       {
         "kind": "LocalArgument",
         "name": "input",
-        "type": "NoteInput!",
+        "type": "CreateNoteInput!",
         "defaultValue": null
       }
     ],
@@ -128,39 +144,50 @@ const batch /*: ConcreteBatch*/ = {
             "kind": "Variable",
             "name": "input",
             "variableName": "input",
-            "type": "NoteInput"
+            "type": "CreateNoteInput!"
           }
         ],
-        "concreteType": "Note",
+        "concreteType": "CreateNotePayload",
         "name": "createNote",
         "plural": false,
         "selections": [
           {
-            "kind": "ScalarField",
+            "kind": "LinkedField",
             "alias": null,
             "args": null,
-            "name": "id",
-            "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "noteText",
-            "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "timeStamp",
-            "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "args": null,
-            "name": "author",
+            "concreteType": "Note",
+            "name": "note",
+            "plural": false,
+            "selections": [
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "id",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "noteText",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "timeStamp",
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "args": null,
+                "name": "author",
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           }
         ],
@@ -168,7 +195,7 @@ const batch /*: ConcreteBatch*/ = {
       }
     ]
   },
-  "text": "mutation createNoteMutation(\n  $input: NoteInput!\n) {\n  createNote(input: $input) {\n    id\n    noteText\n    timeStamp\n    author\n  }\n}\n"
+  "text": "mutation createNoteMutation(\n  $input: CreateNoteInput!\n) {\n  createNote(input: $input) {\n    note {\n      id\n      noteText\n      timeStamp\n      author\n    }\n  }\n}\n"
 };
 
 module.exports = batch;
