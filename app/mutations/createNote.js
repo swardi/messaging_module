@@ -40,10 +40,9 @@ export default function CreateNoteMutation(noteText, timeStamp, author, viewerId
       updater: (proxyStore) => {
         const newNote = proxyStore.getRootField('createNote').getLinkedRecord('note')
         const connection = ConnectionHandler.getConnection(proxyStore.get("viewer-fixed"), 'notes_allNotes')
-        if (connection) {
-          ConnectionHandler.insertEdgeAfter(connection, newNote)
-        }
-      },
+        const newEdge = ConnectionHandler.createEdge(proxyStore, connection, newNote, 'NoteEdge');
+        ConnectionHandler.insertEdgeAfter(connection, newEdge);
+      }
     },
   )
 }

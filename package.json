@@ -22,7 +22,7 @@
     "react": "^16.2.0",
     "react-bootstrap": "^0.31.5",
     "react-dom": "^16.2.0",
-    "react-relay": "^1.4.1",
+    "react-relay": "latest",
     "relay-devtools": "^1.4.0",
     "style-loader": "^0.19.1",
     "webpack": "^3.10.0",

@@ -21,7 +21,7 @@ export default class NoteInput extends React.Component {
       if (event.key === 'Enter'){
         var date = new Date();
         var timeStamp = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear() + ' ' + date.getHours() + ":" + date.getMinutes();
-        CreateNoteMutation(this.state.noteText,  timeStamp, "SH", "viewer-fixed", () => console.log("success"));
+        CreateNoteMutation(this.state.noteText,  timeStamp, "SH", "viewer-fixed", () => this.setState({noteText: ''})  );
       }
       
   }

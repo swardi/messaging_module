@@ -17,7 +17,7 @@ class Notes extends React.Component {
             <ListGroup >
               {
                 this.props.viewer.allNotes.edges.map(({node}, index)=> (
-                  <Note note={node} key={node.id} viewer={this.props.viewer}/>   
+                  <Note note={node} key={node.id} viewer={this.props.viewer}/>
                 ) )
               }
                
