@@ -1,9 +1,5 @@
 # Sample Relay, GraphQL application
 
-Live demo can be seen at the following URL
-
-http://demos.indusvalleylabs.com/relay-react/
-
 
 ## Running the application locally
 
